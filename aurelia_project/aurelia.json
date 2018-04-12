@@ -79,6 +79,11 @@
             "main": "aurelia-testing",
             "env": "dev"
           },
+          {
+            "name": "decimal.js",
+            "path": "../node_modules/decimal.js",
+            "main": "decimal"
+          },
           "text"
         ]
       }
