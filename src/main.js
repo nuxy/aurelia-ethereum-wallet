@@ -1,5 +1,10 @@
+'use strict';
+
 import environment from './environment';
 
+/**
+ * Configure build environment.
+ */
 export function configure(aurelia) {
   aurelia.use
     .standardConfiguration()
