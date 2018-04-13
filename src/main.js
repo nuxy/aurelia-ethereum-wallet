@@ -16,5 +16,8 @@ export function configure(aurelia) {
     aurelia.use.plugin('aurelia-testing');
   }
 
+  // 3rd-party plugins.
+  aurelia.use.plugin('aurelia-configuration');
+
   aurelia.start().then(() => aurelia.setRoot());
 }

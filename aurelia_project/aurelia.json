@@ -44,6 +44,11 @@
         "dependencies": [
           "aurelia-binding",
           "aurelia-bootstrapper",
+          {
+            "name": "aurelia-configuration",
+            "path": "../node_modules/aurelia-configuration/dist/amd",
+            "main": "index"
+          },
           "aurelia-dependency-injection",
           "aurelia-event-aggregator",
           "aurelia-framework",
