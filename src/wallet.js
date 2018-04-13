@@ -1,7 +1,14 @@
 'use strict';
 
+/**
+ * Ethereum wallet.
+ */
 export class Wallet {
+
+  /**
+   * Create a new instance of Wallet.
+   */
   constructor() {
-    this.message = 'Hello World!';
+
   }
 }
