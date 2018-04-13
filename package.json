@@ -7,14 +7,11 @@
     "url": "git+https://github.com/nuxy/aurelia-ethereum-web3js-bundle.git"
   },
   "license": "MIT",
-  "scripts": {
-    "postinstall": "./node_modules/.bin/bower install web3 ; mv ./bower_components/web3/dist/web3-light.min.js scripts"
-  },
   "dependencies": {
     "aurelia-animator-css": "^1.0.4",
     "aurelia-bootstrapper": "^2.2.0",
     "bluebird": "^3.5.1",
-    "decimal.js": "^10.0.0",
+    "ethers": "^3.0.10",
     "requirejs": "^2.3.5",
     "text": "github:requirejs/text#latest"
   },
@@ -33,7 +30,6 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
     "babel-register": "^6.26.0",
-    "bower": "^1.8.4",
     "browser-sync": "^2.23.6",
     "connect-history-api-fallback": "^1.5.0",
     "debounce": "^1.1.0",

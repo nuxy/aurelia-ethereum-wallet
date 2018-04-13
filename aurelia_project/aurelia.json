@@ -80,9 +80,9 @@
             "env": "dev"
           },
           {
-            "name": "decimal.js",
-            "path": "../node_modules/decimal.js",
-            "main": "decimal"
+            "name": "ethers",
+            "path": "../node_modules/ethers/dist",
+            "main": "ethers"
           },
           "text"
         ]
