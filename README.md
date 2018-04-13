@@ -1,6 +1,6 @@
-# Aurelia / Ethereum Web3.js bundle
+# Aurelia / Ethereum wallet
 
-Aurelia and Ethereum supported client-side application.
+Ethereum wallet implementation in Aurelia.
 
 ## Dependencies
 

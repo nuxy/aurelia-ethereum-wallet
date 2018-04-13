@@ -1,10 +1,10 @@
 {
-  "name": "aurelia-ethereum-web3js-bundle",
-  "description": "Aurelia and Ethereum supported client-side application.",
+  "name": "aurelia-ethereum-wallet",
+  "description": "Ethereum wallet implementation in Aurelia.",
   "version": "0.1.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nuxy/aurelia-ethereum-web3js-bundle.git"
+    "url": "git+https://github.com/nuxy/aurelia-ethereum.git"
   },
   "license": "MIT",
   "dependencies": {

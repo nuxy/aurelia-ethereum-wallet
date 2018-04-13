@@ -1,5 +1,5 @@
 {
-  "name": "aurelia-ethereum-web3js-bundle",
+  "name": "aurelia-ethereum-wallet",
   "type": "project:application",
   "bundler": {
     "id": "cli",
