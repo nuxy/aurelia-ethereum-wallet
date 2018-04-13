@@ -1,7 +1,5 @@
-'use strict';
-
 /**
- * Account action / balance.
+ * Account action / Balance.
  */
 export class Balance {
 

@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Account actions.
  */
@@ -26,16 +24,15 @@ export class Account {
    * @inheritdoc
    */
   activate(params = null, routeConfig = null) {
-    if (routeConfig['name'] === 'account') {
+    if (routeConfig.name === 'account') {
 
       // Load action content.
-      if (params['action']) {
-        this.action = params['action'];
+      if (params.action) {
+        this.action = params.action;
 
         // By route.
         this.model = 'account/' + this.action;
-      }
-      else {
+      } else {
         this.action = 'wallet';
 
         // Default page.
