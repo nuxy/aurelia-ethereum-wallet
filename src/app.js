@@ -1,23 +1,16 @@
 import {inject} from 'aurelia-framework';
-import {Router} from 'aurelia-router';
 
 // Local modules.
 import {Routes} from 'config/routes';
 
-@inject(Router, Routes)
+@inject(Routes)
 
 /**
  * Main application.
  *
- * @requires Router
  * @requires Routes
  */
 export class App {
-
-  /**
-   * @var {Router} router
-   */
-  router = null;
 
   /**
    * @var {Routes} routes
@@ -25,13 +18,11 @@ export class App {
   routes = null;
 
   /**
-   * Create a new instance of App
+   * Create a new instance of App.
    *
-   * @param {Router} Router
    * @param {Routes} Routes
    */
-  constructor(Router, Routes) {
-    this.router = Router;
+  constructor(Routes) {
     this.routes = Routes;
   }
 
