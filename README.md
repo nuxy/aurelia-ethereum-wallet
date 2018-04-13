@@ -19,3 +19,7 @@ Install package dependencies using [NPM](https://npmjs.com).
 Launch the client (development mode):
 
     $ au run --watch
+
+Run [ESLint](https://eslint.org/) on project sources:
+
+    $ npm run lint
