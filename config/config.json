@@ -1,6 +1,7 @@
 {
+  "address": "",
   "provider": {
-    "name": "",
-    "jsonRpcUrl": ""
+    "name": "homestead",
+    "jsonRpcUrl": "http://localhost:8545"
   }
 }
