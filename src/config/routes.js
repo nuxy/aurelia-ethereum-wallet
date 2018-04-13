@@ -40,6 +40,12 @@ export class Routes {
           route: ['', 'wallet'],
           name: 'wallet',
           moduleId: 'wallet'
+        },
+        {
+          route: ['account/:action'],
+          name: 'account',
+          moduleId: 'account',
+          activationStrategy: 'replace'
         }
       ]);
 
