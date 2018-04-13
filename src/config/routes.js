@@ -42,7 +42,7 @@ export class Routes {
           moduleId: 'wallet'
         },
         {
-          route: ['account/:action'],
+          route: ['account/:action?'],
           name: 'account',
           moduleId: 'account',
           activationStrategy: 'replace'
