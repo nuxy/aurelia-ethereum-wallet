@@ -37,13 +37,13 @@ export class Routes {
 
       config.map([
         {
-          route: ['example'],
-          name: 'example',
-          moduleId: 'example'
+          route: ['', 'wallet'],
+          name: 'wallet',
+          moduleId: 'wallet'
         }
       ]);
 
-      config.fallbackRoute('example');
+      config.fallbackRoute('wallet');
     });
   }
 }

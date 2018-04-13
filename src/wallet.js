@@ -1,6 +1,6 @@
 'use strict';
 
-export class Example {
+export class Wallet {
   constructor() {
     this.message = 'Hello World!';
   }
