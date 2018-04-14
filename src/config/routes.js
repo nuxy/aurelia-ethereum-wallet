@@ -35,7 +35,11 @@ export class Routes {
 
       config.map([
         {
-          route: ['', 'wallet'],
+          route: [''],
+          redirect: 'wallet'
+        },
+        {
+          route: ['wallet'],
           name: 'wallet',
           moduleId: 'wallet'
         },
