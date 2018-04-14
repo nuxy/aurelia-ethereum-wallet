@@ -1,7 +1,35 @@
 <template>
   <h1>Account</h1>
 
-  <div>
+  <ul class="actions">
+    <li class.bind="action == 'balance' ? 'open' : ''">
+      <a href="/account/balance">
+        Balance
+      </a>
+    </li>
+    <li class.bind="action == 'send' ? 'open' : ''">
+      <a href="/account/send">
+        Send
+      </a>
+    </li>
+    <li class.bind="action == 'receive' ? 'open' : ''">
+      <a href="/account/receive">
+        Receive
+      </a>
+    </li>
+    <li class.bind="action == 'history' ? 'open' : ''">
+      <a href="/account/history">
+        History
+      </a>
+    </li>
+    <li class.bind="action == 'settings' ? 'open' : ''">
+      <a href="/account/settings">
+        Settings
+      </a>
+    </li>
+  </ul>
+
+  <div class="content">
     <compose view-model.bind="model" if.bind="model"></compose>
   </div>
 </template>

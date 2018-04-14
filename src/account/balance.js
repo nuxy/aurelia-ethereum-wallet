@@ -1,5 +1,5 @@
 /**
- * Account action / Balance.
+ * Account / Balance.
  */
 export class Balance {
 

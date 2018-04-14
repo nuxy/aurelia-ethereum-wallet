@@ -33,7 +33,7 @@ export class Account {
         // By route.
         this.model = 'account/' + this.action;
       } else {
-        this.action = 'wallet';
+        this.action = 'balance';
 
         // Default page.
         this.model = 'account/balance';
