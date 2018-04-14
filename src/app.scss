@@ -1,0 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/**
+ * Includes.
+ */
+@import 'account';
+@import 'account/balance';
+@import 'account/history';
+@import 'account/receive';
+@import 'account/send';
+@import 'account/settings';
+@import 'wallet';
