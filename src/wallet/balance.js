@@ -1,5 +1,5 @@
 /**
- * Account / Balance.
+ * Wallet / Balance.
  */
 export class Balance {
 

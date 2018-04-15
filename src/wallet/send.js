@@ -1,5 +1,5 @@
 /**
- * Account / Send.
+ * Wallet / Send.
  */
 export class Send {
 

@@ -1,5 +1,5 @@
 /**
- * Account / Receive.
+ * Wallet / Receive.
  */
 export class Receive {
 

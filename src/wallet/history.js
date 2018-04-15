@@ -1,5 +1,5 @@
 /**
- * Account / History.
+ * Wallet / History.
  */
 export class History {
 

@@ -1,5 +1,5 @@
 /**
- * Account / Settings.
+ * Wallet / Settings.
  */
 export class Settings {
 
