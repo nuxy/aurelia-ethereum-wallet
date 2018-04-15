@@ -1,10 +1,10 @@
 /**
  * Wallet / Balance.
  */
-export class Balance {
+export class WalletBalance {
 
   /**
-   * Create a new instance of Balance.
+   * Create a new instance of WalletBalance.
    */
   constructor() {
 

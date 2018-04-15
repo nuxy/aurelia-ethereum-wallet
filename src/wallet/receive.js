@@ -1,10 +1,10 @@
 /**
  * Wallet / Receive.
  */
-export class Receive {
+export class WalletReceive {
 
   /**
-   * Create a new instance of Receive.
+   * Create a new instance of WalletReceive.
    */
   constructor() {
 

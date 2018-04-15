@@ -1,10 +1,10 @@
 /**
  * Wallet / Settings.
  */
-export class Settings {
+export class WalletSettings {
 
   /**
-   * Create a new instance of Settings.
+   * Create a new instance of WalletSettings.
    */
   constructor() {
 
