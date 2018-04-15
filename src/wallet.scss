@@ -1,7 +1,26 @@
 #wallet {
   padding: 20px;
 
-  h1 {
+  ul {
+    margin: 10px 0;
+
+    &.actions {
+      li {
+        display: inline-block;
+        list-style-type: none;
+
+        &.open {
+          a {
+            color: #000;
+            font-weight: bold;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
+
+  .content {
 
   }
 }

@@ -14,10 +14,10 @@ h2 {
 /**
  * Includes.
  */
-@import 'account';
-@import 'account/balance';
-@import 'account/history';
-@import 'account/receive';
-@import 'account/send';
-@import 'account/settings';
 @import 'wallet';
+@import 'wallet/accounts';
+@import 'wallet/balance';
+@import 'wallet/history';
+@import 'wallet/receive';
+@import 'wallet/send';
+@import 'wallet/settings';

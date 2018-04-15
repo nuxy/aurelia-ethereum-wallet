@@ -36,22 +36,17 @@ export class Routes {
       config.map([
         {
           route: [''],
-          redirect: 'wallet'
+          redirect: 'wallet/accounts'
         },
         {
-          route: ['wallet'],
+          route: ['wallet/:action?'],
           name: 'wallet',
-          moduleId: 'wallet'
-        },
-        {
-          route: ['account/:action?'],
-          name: 'account',
-          moduleId: 'account',
+          moduleId: 'wallet',
           activationStrategy: 'replace'
         }
       ]);
 
-      config.fallbackRoute('wallet');
+      config.fallbackRoute('not-found');
     });
   }
 }
