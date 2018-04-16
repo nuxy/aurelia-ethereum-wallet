@@ -9,11 +9,6 @@ import aes  from 'crypto-js/aes';
 export class Storage {
 
   /**
-   * @var {String} secretKey
-   */
-  secretKey = null;
-
-  /**
    * @var {String} prefix
    */
   prefix = null;
@@ -21,15 +16,11 @@ export class Storage {
   /**
    * Create a new instance of Storage.
    *
-   * @param {String} secretKey
-   *   Crypto secret key.
-   *
    * @param {String} prefix
    *   Storage name prefix (optional).
    */
-  constructor(secretKey, prefix) {
-    this.secretKey = secretKey;
-    this.prefix    = prefix || '';
+  constructor(prefix = '') {
+    this.prefix = prefix;
   }
 
   /**
@@ -41,13 +32,20 @@ export class Storage {
    * @param {String} key
    *   Storage key name.
    *
+   * @param {String} secret
+   *   Encrypt using secret (optional).
+   *
    * @return {*|undefined}
    */
-  getItem(key) {
+  getItem(key, secret = null) {
     if (typeof key === 'string') {
       let val = sessionStorage.getItem(this.getKeyName(key));
       if (val) {
-        val = (aes.decrypt(val, this.secretKey)).toString(core.enc.Utf8);
+        if (secret) {
+          val = aes.decrypt(
+            val, secret
+          ).toString(core.enc.Utf8);
+        }
 
         if (Storage.isValidJson(val)) {
           return JSON.parse(val);
@@ -65,16 +63,23 @@ export class Storage {
    * @param {String} key
    *   Storage item key name.
    *
+   * @param {String} secret
+   *   Encrypt using secret (optional).
+   *
    * @param {*} data
    *   sessionStorage data.
    *
    * @return {Boolean|void}
    */
-  setItem(key, data) {
+  setItem(key, data, secret = null) {
     if (typeof key === 'string') {
-      data = aes.encrypt(
-        JSON.stringify(data), this.secretKey
-      ).toString();
+      if (secret) {
+        data = aes.encrypt(
+          JSON.stringify(data), secret
+        ).toString();
+      } else {
+        data = JSON.stringify(data);
+      }
 
       return sessionStorage.setItem(this.getKeyName(key), data);
     }

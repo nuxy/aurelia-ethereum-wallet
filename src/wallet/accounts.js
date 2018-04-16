@@ -1,11 +1,7 @@
-import {inject}               from 'aurelia-framework';
-import {AureliaConfiguration} from 'aurelia-configuration';
-import ethers                 from 'ethers';
+import ethers from 'ethers';
 
 // Local modules.
 import {Storage} from 'lib/storage';
-
-@inject(AureliaConfiguration)
 
 /**
  * Wallet Accounts.
@@ -19,18 +15,11 @@ export class WalletAccounts {
 
   /**
    * Create a new instance of WalletAccounts.
-   *
-   * @param {AureliaConfiguration} config
-   *   AureliaConfiguration instance.
    */
-  constructor(config) {
-    this.config = config;
+  constructor() {
 
     // Initialize storage.
-    this.storage = new Storage(
-      config.get('storage.secretKey'),
-      config.get('storage.prefix')
-    );
+    this.storage = new Storage();
   }
 
   /**
@@ -49,8 +38,7 @@ export class WalletAccounts {
     this.accounts.push({
       balance: '0.00000000',
       wallet: {
-        address: wallet.address,
-        privateKey: wallet.privateKey
+        address: wallet.address
       }
     });
 
