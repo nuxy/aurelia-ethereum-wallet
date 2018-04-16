@@ -1,7 +1,10 @@
 {
-  "address": "",
   "provider": {
     "name": "homestead",
     "jsonRpcUrl": "http://localhost:8545"
+  },
+  "storage": {
+    "secretKey": "<TO BE REMOVED>",
+    "prefix": "aurelia-"
   }
 }
