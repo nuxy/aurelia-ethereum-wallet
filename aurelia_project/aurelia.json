@@ -85,6 +85,14 @@
             "env": "dev"
           },
           {
+            "name": "crypto-js",
+            "path": "../node_modules/crypto-js",
+            "main": "core",
+            "resources": [
+              "aes.js"
+            ]
+          },
+          {
             "name": "ethers",
             "path": "../node_modules/ethers/dist",
             "main": "ethers"
