@@ -30,11 +30,7 @@ export class Routes {
 
       config.map([
         {
-          route: [''],
-          redirect: 'wallet/accounts'
-        },
-        {
-          route: ['wallet/:action?'],
+          route: ['', 'wallet/:action?'],
           name: 'wallet',
           moduleId: 'wallet',
           activationStrategy: 'replace'

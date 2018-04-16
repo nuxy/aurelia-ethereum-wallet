@@ -15,7 +15,7 @@ export class WalletAccounts {
   /**
    * @var {Array} accounts
    */
-  accounts = [];
+  accounts = null;
 
   /**
    * Create a new instance of WalletAccounts.
@@ -24,13 +24,20 @@ export class WalletAccounts {
    *   AureliaConfiguration instance.
    */
   constructor(config) {
-    this.config  = config;
+    this.config = config;
 
     // Initialize storage.
     this.storage = new Storage(
       config.get('storage.secretKey'),
       config.get('storage.prefix')
     );
+  }
+
+  /**
+   * @inheritdoc
+   */
+  attached() {
+    this.accounts = this.storage.getItem('accounts') || [];
   }
 
   /**
@@ -41,7 +48,10 @@ export class WalletAccounts {
 
     this.accounts.push({
       balance: '0.00000000',
-      wallet: wallet
+      wallet: {
+        address: wallet.address,
+        privateKey: wallet.privateKey
+      }
     });
 
     this.storage.setItem('accounts', this.accounts);
