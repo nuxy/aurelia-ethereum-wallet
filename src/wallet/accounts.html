@@ -11,12 +11,12 @@
       <tbody>
         <tr repeat.for="account of accounts">
           <td>
-            <input placeholder="Untitled" value.bind="account.title" keyup.trigger="rename(account.address, account.title)" />
+            <input placeholder="Untitled" value.bind="account.title" keyup.trigger="rename(account.wallet.address, account.title)" />
           </td>
-          <td>${account.address}</td>
+          <td>${account.wallet.address}</td>
           <td>${account.balance}</td>
           <td>
-            <button click.trigger="remove(account.address)">Remove</button>
+            <button click.trigger="remove(account.wallet.address)">Remove</button>
           </td>
         </tr>
       </tbody>

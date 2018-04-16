@@ -1,4 +1,11 @@
-import ethers from 'ethers';
+import {inject}               from 'aurelia-framework';
+import {AureliaConfiguration} from 'aurelia-configuration';
+import ethers                 from 'ethers';
+
+// Local modules.
+import {Storage} from 'lib/storage';
+
+@inject(AureliaConfiguration)
 
 /**
  * Wallet Accounts.
@@ -12,41 +19,65 @@ export class WalletAccounts {
 
   /**
    * Create a new instance of WalletAccounts.
+   *
+   * @param {AureliaConfiguration} config
+   *   AureliaConfiguration instance.
    */
-  constructor() {
+  constructor(config) {
+    this.config  = config;
 
+    // Initialize storage.
+    this.storage = new Storage(
+      config.get('storage.secretKey'),
+      config.get('storage.prefix')
+    );
   }
 
   /**
    * Create a new account.
    */
   create() {
-    let account = ethers.Wallet.createRandom();
+    let wallet = ethers.Wallet.createRandom();
 
     this.accounts.push({
-      address: account.address,
-      balance: '0.00000000'
+      balance: '0.00000000',
+      wallet: wallet
     });
+
+    this.storage.setItem('accounts', this.accounts);
   }
 
   /**
    * Rename an existing account.
+   *
+   * @param {String} address
+   *   Wallet address.
+   *
+   * @param {String} value
+   *   New title value.
    */
   rename(address, value) {
     this.accounts = this.accounts.map(account => {
-      if (account.address === address) {
+      if (account.wallet.address === address) {
         account.title = value;
       }
       return account;
     });
+
+    this.storage.setItem('accounts', this.accounts);
   }
 
   /**
    * Remove an existing account.
+   *
+   * @param {String} address
+   *   Wallet address.
    */
   remove(address) {
     this.accounts = this.accounts.filter(account => {
-      return account.address !== address;
+      return account.wallet.address !== address;
     });
+
+    this.storage.setItem('accounts', this.accounts);
   }
 }
