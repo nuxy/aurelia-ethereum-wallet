@@ -1,6 +1,9 @@
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 
+// Local modules.
+import {Setup} from 'setup';
+
 @inject(Router)
 
 /**
@@ -26,18 +29,26 @@ export class Routes {
   configure() {
     this.router.configure(function(config) {
       config.options.hashChange = false;
-      config.options.pushState = true;
+      config.options.pushState  = true;
+
+      config.addPipelineStep('authorize', Setup);
 
       config.map([
         {
           route: ['', 'wallet/:action?'],
           name: 'wallet',
           moduleId: 'wallet',
-          activationStrategy: 'replace'
+          activationStrategy: 'replace',
+          settings: { setup: true }
+        },
+        {
+          route: ['setup'],
+          name: 'setup',
+          moduleId: 'setup'
         }
       ]);
 
-      config.fallbackRoute('not-found');
+      config.fallbackRoute('setup');
     });
   }
 }
