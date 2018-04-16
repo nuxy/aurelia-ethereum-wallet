@@ -11,11 +11,6 @@ import {Router} from 'aurelia-router';
 export class Routes {
 
   /**
-   * @var {Router} router
-   */
-  router = null;
-
-  /**
    * Create a new instance of Routes.
    *
    * @param {Router} Router

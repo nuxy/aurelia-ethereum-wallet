@@ -13,11 +13,6 @@ import {Routes} from 'config/routes';
 export class App {
 
   /**
-   * @var {Routes} routes
-   */
-  routes = null;
-
-  /**
    * Create a new instance of App.
    *
    * @param {Routes} Routes
