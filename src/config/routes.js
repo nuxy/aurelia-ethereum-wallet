@@ -1,4 +1,4 @@
-import {inject} from 'aurelia-framework';
+import {inject} from 'aurelia-dependency-injection';
 import {Router} from 'aurelia-router';
 
 // Local modules.
@@ -17,7 +17,7 @@ export class Routes {
    * Create a new instance of Routes.
    *
    * @param {Router} Router
-   *   Client-side router.
+   *   Router instance.
    */
   constructor(Router) {
     this.router = Router;
