@@ -11,11 +11,13 @@
       <tbody>
         <tr repeat.for="account of accounts">
           <td>
-            <input placeholder="Untitled" value.bind="account.title" keyup.trigger="rename(account.address, account.title)" />
+            <input maxwidth="15" placeholder="Untitled" keyup.trigger="rename(account.address, account.title)" value.bind="account.title" />
           </td>
           <td>${account.address}</td>
           <td>${account.balance}</td>
           <td>
+            <button click.trigger="action('wallet/receive', account)">Deposit</button>
+            <button click.trigger="action('wallet/send', account)">Withdrawl</button>
             <button click.trigger="remove(account.address)">Remove</button>
           </td>
         </tr>
@@ -23,7 +25,7 @@
     </table>
 
     <button click.trigger="prompt = true" disabled.bind="progress">
-        Create <span if.bind="progress > 0 && progress < 100">(${progress}% complete)</span>
+      Create <span if.bind="progress > 0 && progress < 100">(${progress}% complete)</span>
     </button>
 
     <form submit.trigger="create()" if.bind="prompt">

@@ -1,17 +1,23 @@
-import ethers from 'ethers';
+import {inject} from 'aurelia-dependency-injection';
+import {Router} from 'aurelia-router';
+import ethers   from 'ethers';
 
 // Local modules.
 import {Storage} from 'lib/storage';
 
+@inject(Router)
+
 /**
  * Wallet Accounts.
+ *
+ * @requires Router
  */
 export class WalletAccounts {
 
   /**
    * @var {Array} accounts
    */
-  accounts = null;
+  accounts = [];
 
   /**
    * @var {Number} progress
@@ -20,8 +26,12 @@ export class WalletAccounts {
 
   /**
    * Create a new instance of WalletAccounts.
+   *
+   * @param {Router} Router
+   *   Router instance.
    */
-  constructor() {
+  constructor(Router) {
+    this.router = Router;
 
     // Initialize storage.
     this.storage = new Storage();
@@ -31,7 +41,10 @@ export class WalletAccounts {
    * @inheritdoc
    */
   attached() {
-    this.accounts = this.storage.getItem('accounts') || [];
+    let items = this.storage.getItem('accounts');
+    if (items) {
+      this.accounts = items;
+    }
   }
 
   /**
@@ -41,7 +54,7 @@ export class WalletAccounts {
     let wallet = ethers.Wallet.createRandom();
 
     let callback = percent => {
-      this.progress = parseInt(percent * 100);
+      this.progress = parseInt(percent * 100, 10);
     };
 
     wallet.encrypt(this.password, callback)
@@ -58,6 +71,22 @@ export class WalletAccounts {
 
         this.password = this.prompt = null;
       });
+  }
+
+  /**
+   * Remove an existing account.
+   *
+   * @param {String} address
+   *   Wallet address.
+   */
+  remove(address) {
+    if (window.confirm(`Remove: ${address}?`)) {
+      this.accounts = this.accounts.filter(account => {
+        return account.address !== address;
+      });
+
+      this.storage.setItem('accounts', this.accounts);
+    }
   }
 
   /**
@@ -81,16 +110,17 @@ export class WalletAccounts {
   }
 
   /**
-   * Remove an existing account.
+   * Store account and redirect.
+   *
+   * @param {String} route
+   *   Route name to redirect.
    *
    * @param {String} address
-   *   Wallet address.
+   *   Wallet account.
    */
-  remove(address) {
-    this.accounts = this.accounts.filter(account => {
-      return account.address !== address;
-    });
+  action(route, account) {
+    this.storage.setItem('selected', account);
 
-    this.storage.setItem('accounts', this.accounts);
+    this.router.navigate(route);
   }
 }
