@@ -97,7 +97,13 @@
             "path": "../node_modules/ethers/dist",
             "main": "ethers"
           },
-          "text"
+          "text",
+          {
+            "name": "aurelia-dialog",
+            "main": "aurelia-dialog",
+            "path": "../node_modules/aurelia-dialog/dist/amd",
+            "resources": []
+          }
         ]
       }
     ],

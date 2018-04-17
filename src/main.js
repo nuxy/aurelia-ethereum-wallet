@@ -18,6 +18,7 @@ export function configure(aurelia) {
 
   // 3rd-party plugins.
   aurelia.use.plugin('aurelia-configuration');
+  aurelia.use.plugin('aurelia-dialog');
 
   aurelia.start().then(() => aurelia.setRoot());
 }

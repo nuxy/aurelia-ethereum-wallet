@@ -10,6 +10,7 @@
   "dependencies": {
     "aurelia-animator-css": "^1.0.4",
     "aurelia-bootstrapper": "^2.2.0",
+    "aurelia-dialog": "^1.0.0-rc.2.0.0",
     "bluebird": "^3.5.1",
     "crypto-js": "^3.1.9-1",
     "ethers": "^3.0.10",
