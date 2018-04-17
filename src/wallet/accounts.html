@@ -11,9 +11,9 @@
       <tbody>
         <tr repeat.for="account of accounts">
           <td>
-            <input placeholder="Untitled" value.bind="account.title" keyup.trigger="rename(account.wallet.address, account.title)" />
+            <input placeholder="Untitled" value.bind="account.title" keyup.trigger="rename(account.address, account.title)" />
           </td>
-          <td>${account.wallet.address}</td>
+          <td>${account.address}</td>
           <td>${account.balance}</td>
           <td>
             <button click.trigger="remove(account.wallet.address)">Remove</button>
@@ -23,6 +23,32 @@
     </table>
 
     <form submit.trigger="create()">
+      <button type="submit">Create</button>
+    </form>
+
+    <!-- To be moved to it's own component -->
+
+    <form submit.trigger="create()" if.bind="prompt">
+      <fieldset>
+        <div>
+          <label>
+            <strong>Password:</strong>
+          </label>
+
+          <input type="password" value.bind="password" />
+        </div>
+
+        <div>
+          <label>
+            <strong>Confirm:</strong>
+          </label>
+
+          <input type="password" value.bind="confirm" />
+        </div>
+      </fieldset>
+
+      <!-- To be moved to it's own component -->
+
       <button type="submit">Create</button>
     </form>
   </div>

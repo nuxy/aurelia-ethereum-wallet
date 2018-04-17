@@ -33,16 +33,22 @@ export class WalletAccounts {
    * Create a new account.
    */
   create() {
-    let wallet = ethers.Wallet.createRandom();
+    if (this.prompt) {
+      let wallet = ethers.Wallet.createRandom();
 
-    this.accounts.push({
-      balance: '0.00000000',
-      wallet: {
-        address: wallet.address
-      }
-    });
+      wallet.encrypt(this.password)
+        .then(json => {
+          this.accounts.push({
+            balance: '0.00000000',
+            address: wallet.address,
+            wallet: json
+          });
 
-    this.storage.setItem('accounts', this.accounts);
+          this.storage.setItem('accounts', this.accounts);
+        });
+    } else {
+      this.prompt = true;
+    }
   }
 
   /**
