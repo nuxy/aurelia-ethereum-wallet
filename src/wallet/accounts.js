@@ -14,6 +14,11 @@ export class WalletAccounts {
   accounts = null;
 
   /**
+   * @var {Number} progress
+   */
+  progress = 0;
+
+  /**
    * Create a new instance of WalletAccounts.
    */
   constructor() {
@@ -33,22 +38,26 @@ export class WalletAccounts {
    * Create a new account.
    */
   create() {
-    if (this.prompt) {
-      let wallet = ethers.Wallet.createRandom();
+    let wallet = ethers.Wallet.createRandom();
 
-      wallet.encrypt(this.password)
-        .then(json => {
-          this.accounts.push({
-            balance: '0.00000000',
-            address: wallet.address,
-            wallet: json
-          });
+    let callback = percent => {
+      this.progress = parseInt(percent * 100);
+    };
 
-          this.storage.setItem('accounts', this.accounts);
+    wallet.encrypt(this.password, callback)
+      .then(json => {
+        this.progress = 0;
+
+        this.accounts.push({
+          balance: '0.00000000',
+          address: wallet.address,
+          wallet: json
         });
-    } else {
-      this.prompt = true;
-    }
+
+        this.storage.setItem('accounts', this.accounts);
+
+        this.password = this.prompt = null;
+      });
   }
 
   /**
@@ -62,7 +71,7 @@ export class WalletAccounts {
    */
   rename(address, value) {
     this.accounts = this.accounts.map(account => {
-      if (account.wallet.address === address) {
+      if (account.address === address) {
         account.title = value;
       }
       return account;
@@ -79,7 +88,7 @@ export class WalletAccounts {
    */
   remove(address) {
     this.accounts = this.accounts.filter(account => {
-      return account.wallet.address !== address;
+      return account.address !== address;
     });
 
     this.storage.setItem('accounts', this.accounts);

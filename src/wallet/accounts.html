@@ -16,40 +16,26 @@
           <td>${account.address}</td>
           <td>${account.balance}</td>
           <td>
-            <button click.trigger="remove(account.wallet.address)">Remove</button>
+            <button click.trigger="remove(account.address)">Remove</button>
           </td>
         </tr>
       </tbody>
     </table>
 
-    <form submit.trigger="create()">
-      <button type="submit">Create</button>
-    </form>
-
-    <!-- To be moved to it's own component -->
+    <button click.trigger="prompt = true" disabled.bind="progress">
+        Create <span if.bind="progress > 0 && progress < 100">(${progress}% complete)</span>
+    </button>
 
     <form submit.trigger="create()" if.bind="prompt">
       <fieldset>
-        <div>
-          <label>
-            <strong>Password:</strong>
-          </label>
+        <label>
+          <strong>Password</strong>
+        </label>
 
-          <input type="password" value.bind="password" />
-        </div>
+        <input type="password" focus="true" pattern=".{8,}" required="true" value.bind="password" />
 
-        <div>
-          <label>
-            <strong>Confirm:</strong>
-          </label>
-
-          <input type="password" value.bind="confirm" />
-        </div>
+        <button disabled.bind="!password || password.length < 8">Submit</button>
       </fieldset>
-
-      <!-- To be moved to it's own component -->
-
-      <button type="submit">Create</button>
     </form>
   </div>
 </template>
