@@ -1,6 +1,3 @@
-// Local modules.
-import {Storage} from 'lib/storage';
-
 /**
  * Wallet setup.
  */
@@ -10,7 +7,7 @@ export class Setup {
    * @var {Boolean} isReady
    * @static
    */
-  static isReady = false;
+  static isReady = true;
 
   /**
    * Create a new instance of Setup.
@@ -25,7 +22,10 @@ export class Setup {
    * @see config.addPipelineStep
    */
   run(NavigationInstruction, next) {
-    if (NavigationInstruction.getAllInstructions().some(instruction => instruction.config.settings.setup)) {
+    let setup = NavigationInstruction.getAllInstructions()
+      .some(instruction => instruction.config.settings.setup);
+
+    if (setup) {
       if (!Setup.isReady) {
         return next.cancel();
       }
