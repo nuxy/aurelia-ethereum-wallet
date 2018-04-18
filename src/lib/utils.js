@@ -46,7 +46,7 @@ export class Utils {
     }, Promise.resolve([]))
       .then(obj => obj)
       .catch(function(err) {
-        throw new Error(`${name} ${err}`);
+        throw new Error(`${name} failed due to ${err.message}`);
       });
   }
 }
