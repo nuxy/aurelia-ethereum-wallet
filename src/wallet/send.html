@@ -1,5 +1,55 @@
 <template>
   <div id="wallet-send">
     <h2>Send</h2>
+
+    <div class="status ${status.error ? 'error' : ''}" if.bind="status">
+      &rtrif; ${status.message}
+    </div>
+
+    <form>
+      <fieldset>
+        <label>
+          <strong>Account</strong>
+        </label>
+
+        <select matcher.bind="matcher" value.bind="selected">
+          <option model.bind="null">Choose...</option>
+          <option model.bind="account" repeat.for="account of accounts">
+            ${account.title || 'Untitled'}
+          </option>
+        </select>
+      </fieldset>
+
+      <fieldset>
+        <label>
+          <strong>Send To</strong>
+        </label>
+
+        <input maxwidth="42" placeholder="0x0000000000000000000000000000000000000000" value.bind="address" />
+      </fieldset>
+
+      <fieldset>
+        <label>
+          <strong>Amount</strong>
+        </label>
+
+        <input maxwidth="20" placeholder="0.00000000" value.bind="amount" />
+      </fieldset>
+
+      <fieldset>
+        <label>
+          <strong>Data</strong>
+        </label>
+
+        <textarea value.bind="data"></textarea>
+      </fieldset>
+    </form>
+
+    <button click.trigger="submit()" disabled.bind="!selected || !amount || !address || address.length < 42">Submit</button>
+
+    <ul if.bind="selected">
+      <li><strong>Address</strong> ${selected.address}</li>
+      <li><strong>Balance</strong> ${selected.balance}</li>
+    </ul>
   </div>
 </template>
