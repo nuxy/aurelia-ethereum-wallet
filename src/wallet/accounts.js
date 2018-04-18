@@ -1,15 +1,18 @@
-import {inject} from 'aurelia-dependency-injection';
-import {Router} from 'aurelia-router';
-import ethers   from 'ethers';
+import {inject}        from 'aurelia-dependency-injection';
+import {DialogService} from 'aurelia-dialog';
+import {Router}        from 'aurelia-router';
+import ethers          from 'ethers';
 
 // Local modules.
-import {Storage} from 'lib/storage';
+import {DialogConfirm} from 'dialog/confirm';
+import {Storage}       from 'lib/storage';
 
-@inject(Router)
+@inject(DialogService, Router)
 
 /**
  * Wallet Accounts.
  *
+ * @requires DialogService
  * @requires Router
  */
 export class WalletAccounts {
@@ -27,10 +30,14 @@ export class WalletAccounts {
   /**
    * Create a new instance of WalletAccounts.
    *
+   * @param {DialogService} DialogService
+   *   DialogService instance.
+   *
    * @param {Router} Router
    *   Router instance.
    */
-  constructor(Router) {
+  constructor(DialogService, Router) {
+    this.dialog = DialogService;
     this.router = Router;
 
     // Initialize storage.
@@ -80,13 +87,22 @@ export class WalletAccounts {
    *   Wallet address.
    */
   remove(address) {
-    if (window.confirm(`Remove: ${address}?`)) {
-      this.accounts = this.accounts.filter(account => {
-        return account.address !== address;
-      });
+    this.dialog
+      .open({
+        viewModel: DialogConfirm,
+        model: `Remove: ${address}?`
+      })
+      .whenClosed(response => {
+        if (response.wasCancelled === false) {
 
-      this.storage.setItem('accounts', this.accounts);
-    }
+          // Delete from storage.
+          this.accounts = this.accounts.filter(account => {
+            return account.address !== address;
+          });
+
+          this.storage.setItem('accounts', this.accounts);
+        }
+      });
   }
 
   /**
