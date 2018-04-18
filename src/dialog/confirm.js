@@ -11,11 +11,6 @@ import {DialogController} from 'aurelia-dialog';
 export class DialogConfirm {
 
   /**
-   * @var {String} answer
-   */
-  answer = null;
-
-  /**
    * @var {String} message
    */
   message = null;
