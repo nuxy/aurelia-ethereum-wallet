@@ -15,6 +15,7 @@ export class Utils {
    *
    * @memberof Utils
    * @method promiseTasks
+   * @static
    *
    * @param {String} name
    *   Task name.
@@ -39,7 +40,7 @@ export class Utils {
    *
    *     });
    */
-  promiseTasks(name, tasks) {
+  static promiseTasks(name, tasks) {
     return tasks.reduce(function(current, next) {
       return current.then(next);
     }, Promise.resolve([]))
