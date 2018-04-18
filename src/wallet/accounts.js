@@ -49,6 +49,8 @@ export class WalletAccounts {
    * @inheritdoc
    */
   attached() {
+
+    // Get stored accounts.
     let items = this.storage.getItem('accounts');
     if (items) {
       this.accounts = items;
