@@ -59,6 +59,8 @@ export class WalletAccounts {
    * Create a new account.
    */
   create() {
+
+    // Prompt for account password.
     this.dialog
       .open({
         viewModel: DialogPassword,
@@ -97,6 +99,8 @@ export class WalletAccounts {
    *   Wallet address.
    */
   remove(address) {
+
+    // Confirm the action.
     this.dialog
       .open({
         viewModel: DialogConfirm,

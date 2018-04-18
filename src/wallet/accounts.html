@@ -17,7 +17,7 @@
           <td>${account.balance}</td>
           <td>
             <button click.trigger="action('wallet/receive', account)">Deposit</button>
-            <button click.trigger="action('wallet/send', account)">Withdrawl</button>
+            <button click.trigger="action('wallet/send', account)" disabled.bind="account.balance == 0">Withdrawl</button>
             <button click.trigger="remove(account.address)">Remove</button>
           </td>
         </tr>
@@ -25,7 +25,7 @@
     </table>
 
     <button click.trigger="create()" disabled.bind="progress">
-      Creat<span if.bind="progress == 0">e </span><span if.bind="progress > 0 && progress < 100">ing (${progress}% complete)</span>
+      ${progress == 0 ? 'Create' : 'Creating'} <span if.bind="progress > 0 && progress < 100">(${progress}% complete)</span>
     </button>
   </div>
 </template>
