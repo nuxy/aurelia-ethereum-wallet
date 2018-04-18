@@ -62,7 +62,7 @@ export class WalletAccounts {
     this.dialog
       .open({
         viewModel: DialogPassword,
-        model: `Enter the password to protect this account`
+        model: 'Enter the password to protect this account'
       })
       .whenClosed(response => {
         if (response.wasCancelled === false) {
@@ -85,7 +85,7 @@ export class WalletAccounts {
               });
 
               this.storage.setItem('accounts', this.accounts);
-           });
+            });
         }
       });
   }
