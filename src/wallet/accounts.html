@@ -24,20 +24,8 @@
       </tbody>
     </table>
 
-    <button click.trigger="prompt = true" disabled.bind="progress">
-      Create <span if.bind="progress > 0 && progress < 100">(${progress}% complete)</span>
+    <button click.trigger="create()" disabled.bind="progress">
+      Creat<span if.bind="progress == 0">e </span><span if.bind="progress > 0 && progress < 100">ing (${progress}% complete)</span>
     </button>
-
-    <form submit.trigger="create()" if.bind="prompt">
-      <fieldset>
-        <label>
-          <strong>Password</strong>
-        </label>
-
-        <input type="password" focus="true" pattern=".{8,}" required="true" value.bind="password" />
-
-        <button disabled.bind="!password || password.length < 8">Submit</button>
-      </fieldset>
-    </form>
   </div>
 </template>

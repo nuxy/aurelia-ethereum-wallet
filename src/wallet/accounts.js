@@ -4,8 +4,9 @@ import {Router}        from 'aurelia-router';
 import ethers          from 'ethers';
 
 // Local modules.
-import {DialogConfirm} from 'dialog/confirm';
-import {Storage}       from 'lib/storage';
+import {DialogConfirm}  from 'dialog/confirm';
+import {DialogPassword} from 'dialog/password';
+import {Storage}        from 'lib/storage';
 
 @inject(DialogService, Router)
 
@@ -58,25 +59,34 @@ export class WalletAccounts {
    * Create a new account.
    */
   create() {
-    let wallet = ethers.Wallet.createRandom();
+    this.dialog
+      .open({
+        viewModel: DialogPassword,
+        model: `Enter the password to protect this account`
+      })
+      .whenClosed(response => {
+        if (response.wasCancelled === false) {
 
-    let callback = percent => {
-      this.progress = parseInt(percent * 100, 10);
-    };
+          // Generate an encrypted wallet.
+          let wallet = ethers.Wallet.createRandom();
 
-    wallet.encrypt(this.password, callback)
-      .then(json => {
-        this.progress = 0;
+          let callback = percent => {
+            this.progress = parseInt(percent * 100, 10);
+          };
 
-        this.accounts.push({
-          balance: '0.00000000',
-          address: wallet.address,
-          wallet: json
-        });
+          wallet.encrypt(response.output, callback)
+            .then(json => {
+              this.progress = 0;
 
-        this.storage.setItem('accounts', this.accounts);
+              this.accounts.push({
+                balance: '0.00000000',
+                address: wallet.address,
+                wallet: json
+              });
 
-        this.password = this.prompt = null;
+              this.storage.setItem('accounts', this.accounts);
+           });
+        }
       });
   }
 
