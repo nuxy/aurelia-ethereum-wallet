@@ -1,0 +1,13 @@
+<template>
+  <div id="dialog-alert">
+    <ux-dialog>
+      <ux-dialog-body>
+        ${message}
+      </ux-dialog-body>
+
+      <ux-dialog-footer>
+        <button click.trigger="dialog.ok(true)">Ok</button>
+      </ux-dialog-footer>
+    </ux-dialog>
+  </div>
+</template>
