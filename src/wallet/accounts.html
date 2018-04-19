@@ -11,7 +11,7 @@
       <tbody>
         <tr repeat.for="account of accounts">
           <td>
-            <input maxwidth="15" placeholder="Untitled" keyup.trigger="rename(account.address, account.title)" value.bind="account.title" />
+            <input maxwidth="15" placeholder="Untitled ${$index + 1}" keyup.trigger="rename(account.address, account.title)" value.bind="account.title" />
           </td>
           <td>${account.address}</td>
           <td>${account.balance}</td>

@@ -15,7 +15,7 @@
         <select matcher.bind="matcher" value.bind="selected">
           <option model.bind="null">Choose...</option>
           <option model.bind="account" repeat.for="account of accounts">
-            ${account.title || 'Untitled'}
+            ${account.title || 'Untitled ' + ($index + 1)}
           </option>
         </select>
       </fieldset>
