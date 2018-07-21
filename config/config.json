@@ -1,6 +1,6 @@
 {
   "provider": {
-    "name": "homestead",
+    "name": "ropsten",
     "jsonRpcUrl": "http://localhost:8545"
   }
 }

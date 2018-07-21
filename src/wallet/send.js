@@ -1,17 +1,19 @@
-import {inject}        from 'aurelia-dependency-injection';
-import {DialogService} from 'aurelia-dialog';
-import ethers          from 'ethers';
+import {inject}                         from 'aurelia-dependency-injection';
+import {AureliaConfiguration as Config} from 'aurelia-configuration';
+import {DialogService}                  from 'aurelia-dialog';
+import ethers                           from 'ethers';
 
 // Local modules.
 import {DialogPassword} from 'dialog/password';
 import {Storage}        from 'lib/storage';
 import {Utils}          from 'lib/utils';
 
-@inject(DialogService)
+@inject(Config, DialogService)
 
 /**
  * Wallet / Send.
  *
+ * @requires Config
  * @requires DialogService
  */
 export class WalletSend {
@@ -39,10 +41,14 @@ export class WalletSend {
   /**
    * Create a new instance of WalletSend.
    *
+   * @param {Config} Config
+   *   Config instance.
+   *
    * @param {DialogService} DialogService
    *   DialogService instance.
    */
-  constructor(DialogService) {
+  constructor(Config, DialogService) {
+    this.config = Config;
     this.dialog = DialogService;
 
     // Initialize storage.
@@ -74,9 +80,18 @@ export class WalletSend {
   }
 
   /**
+   * @TODO: Check Ether balance > sending amount.
+   */
+  calc() {
+
+
+  }
+
+  /**
    * Send transaction to an address.
    */
   submit() {
+    let network = ethers.providers.networks[this.config.get('provider.name')];
 
     // Prompt for wallet password.
     return this.dialog
@@ -97,7 +112,7 @@ export class WalletSend {
 
           // Transer Ether amount.
           tasks.push(wallet => {
-            wallet.provider = ethers.providers.getDefaultProvider();
+            wallet.provider = ethers.providers.getDefaultProvider(network);
 
             let amount = ethers.utils.parseEther(this.amount);
 
