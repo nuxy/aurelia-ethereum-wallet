@@ -1,0 +1,10 @@
+<template>
+  <div id="element-account-balance" if.bind="wallet">
+    <ul>
+      <li><strong>Address</strong> ${address}</li>
+      <li><strong>Balance</strong> ${balance || 'Retrieving data...'}</li>
+    </ul>
+
+    <button click.trigger="submit()" disabled.bind="balance === 0">Sync Network</button>
+  </div>
+</template>

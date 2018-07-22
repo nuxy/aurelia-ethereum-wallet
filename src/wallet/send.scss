@@ -33,7 +33,7 @@
     fieldset {
       &:nth-child(3) {
         input {
-          width: 90px;
+          width: 175px;
         }
       }
     }
@@ -49,23 +49,6 @@
           height: 40px;
           width: 359px;
         }
-      }
-    }
-  }
-
-  ul {
-    margin-top: 10px;
-    position: absolute;
-    right: 30px;
-    top: 20px;
-    width: 535px;
-
-    li {
-      list-style-type: none;
-
-      strong {
-        display: inline-block;
-        width: 85px;
       }
     }
   }

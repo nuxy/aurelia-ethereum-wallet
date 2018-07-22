@@ -33,7 +33,7 @@
           <strong>Amount</strong>
         </label>
 
-        <input maxwidth="20" placeholder="0.00000000" value.bind="amount" />
+        <input type="number" maxwidth="20" min="0" placeholder="0.000000000000000000" value.bind="amount" />
       </fieldset>
 
       <fieldset>
@@ -45,11 +45,10 @@
       </fieldset>
     </form>
 
-    <button click.trigger="submit()" disabled.bind="!selected || !amount || !address || address.length < 42">Submit</button>
+    <button click.trigger="calc()" disabled.bind="!selected || !amount || !address || address.length < 42">Submit</button>
 
-    <ul if.bind="selected">
-      <li><strong>Address</strong> ${selected.address}</li>
-      <li><strong>Balance</strong> ${selected.balance}</li>
-    </ul>
+    <require from="resources/elements/account-balance"></require>
+
+    <account-balance address.bind="selected.address" balance.bind="selected.balance" wallet.bind="selected.wallet"></account-balance>
   </div>
 </template>

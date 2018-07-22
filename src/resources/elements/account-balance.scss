@@ -1,0 +1,26 @@
+#element-account-balance {
+  margin-top: 10px;
+  position: absolute;
+  right: 30px;
+  top: 20px;
+
+  button {
+    float: right;
+    position: relative;
+    top: -20px;
+  }
+
+  ul {
+    float: left;
+    width: 530px;
+
+    li {
+      list-style-type: none;
+
+      strong {
+        display: inline-block;
+        width: 85px;
+      }
+    }
+  }
+}

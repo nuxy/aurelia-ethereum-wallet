@@ -83,7 +83,7 @@ export class WalletAccounts {
               this.progress = 0;
 
               this.accounts.push({
-                balance: '0.00000000',
+                balance: '0.000000000000000000',
                 address: wallet.address,
                 wallet: json
               });
