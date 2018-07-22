@@ -23,3 +23,7 @@ Launch the client (development mode):
 Run [ESLint](https://eslint.org/) on project sources:
 
     $ npm run lint
+
+### Testing
+
+Generate tokens with the [Ropsten Faucet](http://faucet.ropsten.be:3001).
