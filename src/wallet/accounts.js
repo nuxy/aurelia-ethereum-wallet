@@ -1,19 +1,17 @@
-import {inject}        from 'aurelia-dependency-injection';
-import {DialogService} from 'aurelia-dialog';
-import {Router}        from 'aurelia-router';
-import ethers          from 'ethers';
+import {inject} from 'aurelia-dependency-injection';
+import {Router} from 'aurelia-router';
+import ethers   from 'ethers';
 
 // Local modules.
-import {DialogConfirm}  from 'dialog/confirm';
-import {DialogPassword} from 'dialog/password';
-import {Storage}        from 'lib/storage';
+import {Dialog}  from 'lib/dialog';
+import {Storage} from 'lib/storage';
 
-@inject(DialogService, Router)
+@inject(Dialog, Router)
 
 /**
  * Wallet Accounts.
  *
- * @requires DialogService
+ * @requires Dialog
  * @requires Router
  */
 export class WalletAccounts {
@@ -31,14 +29,14 @@ export class WalletAccounts {
   /**
    * Create a new instance of WalletAccounts.
    *
-   * @param {DialogService} DialogService
-   *   DialogService instance.
+   * @param {Dialog} Dialog
+   *   Dialog instance.
    *
    * @param {Router} Router
    *   Router instance.
    */
-  constructor(DialogService, Router) {
-    this.dialog = DialogService;
+  constructor(Dialog, Router) {
+    this.dialog = Dialog;
     this.router = Router;
 
     // Initialize storage.
@@ -63,34 +61,28 @@ export class WalletAccounts {
   create() {
 
     // Prompt for account password.
-    this.dialog
-      .open({
-        viewModel: DialogPassword,
-        model: 'Enter the password to protect this account'
-      })
-      .whenClosed(response => {
-        if (response.wasCancelled === false) {
+    this.dialog.password(true)
+      .then(response => {
 
-          // Generate an encrypted wallet.
-          let wallet = ethers.Wallet.createRandom();
+        // Generate an encrypted wallet.
+        let wallet = ethers.Wallet.createRandom();
 
-          let callback = percent => {
-            this.progress = parseInt(percent * 100, 10);
-          };
+        let callback = percent => {
+          this.progress = parseInt(percent * 100, 10);
+        };
 
-          wallet.encrypt(response.output, callback)
-            .then(json => {
-              this.progress = 0;
+        wallet.encrypt(response.output, callback)
+          .then(json => {
+            this.progress = 0;
 
-              this.accounts.push({
-                balance: '0.000000000000000000',
-                address: wallet.address,
-                wallet: json
-              });
-
-              this.storage.setItem('accounts', this.accounts);
+            this.accounts.push({
+              balance: '0.000000000000000000',
+              address: wallet.address,
+              wallet: json
             });
-        }
+
+            this.storage.setItem('accounts', this.accounts);
+          });
       });
   }
 
@@ -103,21 +95,15 @@ export class WalletAccounts {
   remove(address) {
 
     // Confirm the action.
-    this.dialog
-      .open({
-        viewModel: DialogConfirm,
-        model: `Remove: ${address}?`
-      })
-      .whenClosed(response => {
-        if (response.wasCancelled === false) {
+    this.dialog.confirm(`Remove: ${address}?`)
+      .then(() => {
 
-          // Delete from storage.
-          this.accounts = this.accounts.filter(account => {
-            return account.address !== address;
-          });
+        // Delete from storage.
+        this.accounts = this.accounts.filter(account => {
+          return account.address !== address;
+        });
 
-          this.storage.setItem('accounts', this.accounts);
-        }
+        this.storage.setItem('accounts', this.accounts);
       });
   }
 
@@ -147,7 +133,7 @@ export class WalletAccounts {
    * @param {String} route
    *   Route name to redirect.
    *
-   * @param {String} address
+   * @param {String} account
    *   Wallet account.
    */
   action(route, account) {

@@ -1,20 +1,19 @@
 import {inject}                         from 'aurelia-dependency-injection';
 import {AureliaConfiguration as Config} from 'aurelia-configuration';
-import {DialogService}                  from 'aurelia-dialog';
 import ethers                           from 'ethers';
 
 // Local modules.
-import {DialogPassword} from 'dialog/password';
-import {Storage}        from 'lib/storage';
-import {Utils}          from 'lib/utils';
+import {Dialog}  from 'lib/dialog';
+import {Storage} from 'lib/storage';
+import {Utils}   from 'lib/utils';
 
-@inject(Config, DialogService)
+@inject(Config, Dialog)
 
 /**
  * Wallet / Send.
  *
  * @requires Config
- * @requires DialogService
+ * @requires Dialog
  */
 export class WalletSend {
 
@@ -44,12 +43,12 @@ export class WalletSend {
    * @param {Config} Config
    *   Config instance.
    *
-   * @param {DialogService} DialogService
-   *   DialogService instance.
+   * @param {Dialog} Dialog
+   *   Dialog instance.
    */
-  constructor(Config, DialogService) {
+  constructor(Config, Dialog) {
     this.config = Config;
-    this.dialog = DialogService;
+    this.dialog = Dialog;
 
     // Initialize storage.
     this.storage = new Storage();
@@ -94,50 +93,44 @@ export class WalletSend {
     let network = ethers.providers.networks[this.config.get('provider.name')];
 
     // Prompt for wallet password.
-    return this.dialog
-      .open({
-        viewModel: DialogPassword,
-        model: 'Enter your account password'
-      })
-      .whenClosed(response => {
-        if (response.wasCancelled === false) {
-          let tasks = [];
+    return this.dialog.password()
+      .then(response => {
+        let tasks = [];
 
-          // Decrypt the wallet.
-          tasks.push(() => {
-            return ethers.Wallet.fromEncryptedWallet(
-              this.selected.wallet, response.output
-            );
-          });
+        // Decrypt the wallet.
+        tasks.push(() => {
+          return ethers.Wallet.fromEncryptedWallet(
+            this.selected.wallet, response.output
+          );
+        });
 
-          // Transer Ether amount.
-          tasks.push(wallet => {
-            wallet.provider = ethers.providers.getDefaultProvider(network);
+        // Transfer Ether amount.
+        tasks.push(wallet => {
+          wallet.provider = ethers.providers.getDefaultProvider(network);
 
-            let amount = ethers.utils.parseEther(this.amount);
+          let amount = ethers.utils.parseEther(this.amount);
 
-            let options = {
-              gasLimit: 21000,
-              gasPrice: ethers.utils.bigNumberify('20000000000')
+          let options = {
+            gasLimit: 21000,
+            gasPrice: ethers.utils.bigNumberify('20000000000')
+          };
+
+          return wallet.send(this.address, amount, options);
+        });
+
+        // Execute actions.
+        Utils.promiseTasks('Sending transaction', tasks)
+          .then(transaction => {
+            this.status = {
+              message: transaction
             };
-
-            return wallet.send(this.address, amount, options);
+          })
+          .catch(err => {
+            this.status = {
+              error: true,
+              message: err
+            };
           });
-
-          // Execute actions.
-          Utils.promiseTasks('Sending transaction', tasks)
-            .then(transaction => {
-              this.status = {
-                message: transaction
-              };
-            })
-            .catch(err => {
-              this.status = {
-                error: true,
-                message: err
-              };
-            });
-        }
       });
   }
 }

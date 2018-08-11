@@ -31,7 +31,7 @@ export class DialogConfirm {
   /**
    * @inheritdoc
    */
-  activate(message) {
-    this.message = message;
+  activate(params = null) {
+    this.message = params.message;
   }
 }

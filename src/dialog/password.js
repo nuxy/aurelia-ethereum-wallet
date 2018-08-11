@@ -11,9 +11,9 @@ import {DialogController} from 'aurelia-dialog';
 export class DialogPassword {
 
   /**
-   * @var {String} answer
+   * @var {boolean} confirm
    */
-  answer = null;
+  confirm = false;
 
   /**
    * @var {String} message
@@ -36,7 +36,8 @@ export class DialogPassword {
   /**
    * @inheritdoc
    */
-  activate(message) {
-    this.message = message;
+  activate(params) {
+    this.confirm = params.confirm;
+    this.message = params.message;
   }
 }

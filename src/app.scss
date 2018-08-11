@@ -12,8 +12,19 @@ h1, h2 {
 }
 
 /**
+ * aurelia-dialog
+ */
+.ux-dialog-open {
+  ux-dialog-overlay {
+    background-color: #000;
+    opacity: 0.5;
+  }
+}
+
+/**
  * Includes.
  */
+@import 'dialog/alert';
 @import 'dialog/confirm';
 @import 'dialog/password';
 @import 'wallet';

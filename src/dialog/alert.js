@@ -31,7 +31,9 @@ export class DialogAlert {
   /**
    * @inheritdoc
    */
-  activate(message) {
-    this.message = message;
+  activate(params = null) {
+    if (params.message) {
+      this.message = params.message;
+    }
   }
 }

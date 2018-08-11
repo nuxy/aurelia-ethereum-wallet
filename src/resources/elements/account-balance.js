@@ -1,20 +1,19 @@
 import {bindable, inject}               from 'aurelia-framework';
 import {AureliaConfiguration as Config} from 'aurelia-configuration';
-import {DialogService}                  from 'aurelia-dialog';
 import ethers                           from 'ethers';
 
 // Local modules.
-import {DialogPassword} from 'dialog/password';
-import {Storage}        from 'lib/storage';
-import {Utils}          from 'lib/utils';
+import {Dialog}  from 'lib/dialog';
+import {Storage} from 'lib/storage';
+import {Utils}   from 'lib/utils';
 
-@inject(Config, DialogService)
+@inject(Config, Dialog)
 
 /**
  * Provides account balance element.
  *
- * @requires Confid
- * @requires DialogService
+ * @requires Config
+ * @requires Dialog
  */
 export class AccountBalanceCustomElement {
   @bindable address;
@@ -27,12 +26,12 @@ export class AccountBalanceCustomElement {
    * @param {Config} Config
    *   Config instance.
    *
-   * @param {DialogService} DialogService
-   *   DialogService instance.
+   * @param {Dialog} Dialog
+   *   Dialog instance.
    */
-  constructor(Config, DialogService) {
+  constructor(Config, Dialog) {
     this.config = Config;
-    this.dialog = DialogService;
+    this.dialog = Dialog;
 
     // Initialize storage.
     this.storage = new Storage();
@@ -47,41 +46,35 @@ export class AccountBalanceCustomElement {
     this.balance = 0;
 
     // Prompt for wallet password.
-    return this.dialog
-      .open({
-        viewModel: DialogPassword,
-        model: 'Enter your account password'
-      })
-      .whenClosed(response => {
-        if (response.wasCancelled === false) {
-          let tasks = [];
+    return this.dialog.password()
+      .then(response => {
+        let tasks = [];
 
-          // Decrypt the wallet.
-          tasks.push(() => {
-            return ethers.Wallet.fromEncryptedWallet(
-              this.wallet, response.output
-            );
-          });
+        // Decrypt the wallet.
+        tasks.push(() => {
+          return ethers.Wallet.fromEncryptedWallet(
+            this.wallet, response.output
+          );
+        });
 
-          // Query the provider.
-          tasks.push(wallet => {
-            wallet.provider = ethers.providers.getDefaultProvider(network);
+        // Query the provider.
+        tasks.push(wallet => {
+          wallet.provider = ethers.providers.getDefaultProvider(network);
 
-            return wallet.getBalance()
-              .then(balance => {
-                return ethers.utils.formatEther(balance, { pad: true });
-              });
-          });
-
-          // Execute actions.
-          Utils.promiseTasks('Syncing wallet', tasks)
+          return wallet.getBalance()
             .then(balance => {
-              this.update(this.balance = balance);
-            })
-            .catch(err => {
-              this.balance = 'Failed to connect...';
+              return ethers.utils.formatEther(balance, { pad: true });
             });
-        }
+        });
+
+        // Execute actions.
+        Utils.promiseTasks('Syncing wallet', tasks)
+          .then(balance => {
+            this.update(this.balance = balance);
+          })
+          .catch(err => {
+            this.balance = 'Failed to connect...';
+          });
       });
   }
 
