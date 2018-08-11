@@ -14,13 +14,6 @@ export class Wallet {
   model = null;
 
   /**
-   * Create a new instance of Account.
-   */
-  constructor() {
-
-  }
-
-  /**
    * @inheritdoc
    */
   activate(params = null, routeConfig = null) {
