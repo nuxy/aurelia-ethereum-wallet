@@ -7,13 +7,14 @@ import {Dialog}  from 'lib/dialog';
 import {Storage} from 'lib/storage';
 import {Utils}   from 'lib/utils';
 
-@inject(Config, Dialog)
+@inject(Config, Dialog, Storage)
 
 /**
  * Wallet / Send.
  *
  * @requires Config
  * @requires Dialog
+ * @requires Storage
  */
 export class WalletSend {
 
@@ -28,11 +29,6 @@ export class WalletSend {
   matcher = null;
 
   /**
-   * @var {String} selected
-   */
-  selected = null;
-
-  /**
    * @var {String} status
    */
   status = null;
@@ -45,13 +41,14 @@ export class WalletSend {
    *
    * @param {Dialog} Dialog
    *   Dialog instance.
+   *
+   * @param {Storage} Storage
+   *   Storage instance.
    */
-  constructor(Config, Dialog) {
-    this.config = Config;
-    this.dialog = Dialog;
-
-    // Initialize storage.
-    this.storage = new Storage();
+  constructor(Config, Dialog, Storage) {
+    this.config  = Config;
+    this.dialog  = Dialog;
+    this.storage = Storage;
   }
 
   /**

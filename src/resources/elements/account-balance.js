@@ -7,13 +7,14 @@ import {Dialog}  from 'lib/dialog';
 import {Storage} from 'lib/storage';
 import {Utils}   from 'lib/utils';
 
-@inject(Config, Dialog)
+@inject(Config, Dialog, Storage)
 
 /**
  * Provides account balance element.
  *
  * @requires Config
  * @requires Dialog
+ * @requires Storage
  */
 export class AccountBalanceCustomElement {
   @bindable address;
@@ -28,13 +29,14 @@ export class AccountBalanceCustomElement {
    *
    * @param {Dialog} Dialog
    *   Dialog instance.
+   *
+   * @param {Storage} Storage
+   *   Storage instance.
    */
-  constructor(Config, Dialog) {
-    this.config = Config;
-    this.dialog = Dialog;
-
-    // Initialize storage.
-    this.storage = new Storage();
+  constructor(Config, Dialog, Storage) {
+    this.config  = Config;
+    this.dialog  = Dialog;
+    this.storage = Storage;
   }
 
   /**
@@ -72,7 +74,7 @@ export class AccountBalanceCustomElement {
           .then(balance => {
             this.update(this.balance = balance);
           })
-          .catch(err => {
+          .catch(() => {
             this.balance = 'Failed to connect...';
           });
       });
@@ -81,17 +83,14 @@ export class AccountBalanceCustomElement {
   /**
    * Update balance for an existing account.
    *
-   * @param {String} address
-   *   Wallet address.
-   *
    * @param {String} value
    *   New balance value.
    */
-  update(address, value) {
+  update(value) {
     let items = this.storage.getItem('accounts');
 
     items.map(account => {
-      if (account.address === address) {
+      if (account.address === this.address) {
         account.balance = value;
       }
       return account;

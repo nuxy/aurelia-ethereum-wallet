@@ -1,18 +1,17 @@
 import {inject} from 'aurelia-dependency-injection';
-import {Router} from 'aurelia-router';
 import ethers   from 'ethers';
 
 // Local modules.
 import {Dialog}  from 'lib/dialog';
 import {Storage} from 'lib/storage';
 
-@inject(Dialog, Router)
+@inject(Dialog, Storage)
 
 /**
  * Wallet Accounts.
  *
  * @requires Dialog
- * @requires Router
+ * @requires Storage
  */
 export class WalletAccounts {
 
@@ -32,15 +31,12 @@ export class WalletAccounts {
    * @param {Dialog} Dialog
    *   Dialog instance.
    *
-   * @param {Router} Router
-   *   Router instance.
+   * @param {Storage} Storage
+   *   Storage instance.
    */
-  constructor(Dialog, Router) {
-    this.dialog = Dialog;
-    this.router = Router;
-
-    // Initialize storage.
-    this.storage = new Storage();
+  constructor(Dialog, Storage) {
+    this.dialog  = Dialog;
+    this.storage = Storage;
   }
 
   /**
@@ -125,20 +121,5 @@ export class WalletAccounts {
     });
 
     this.storage.setItem('accounts', this.accounts);
-  }
-
-  /**
-   * Store account and redirect.
-   *
-   * @param {String} route
-   *   Route name to redirect.
-   *
-   * @param {String} account
-   *   Wallet account.
-   */
-  action(route, account) {
-    this.storage.setItem('selected', account);
-
-    this.router.navigate(route);
   }
 }

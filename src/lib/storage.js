@@ -19,7 +19,7 @@ export class Storage {
    *   Config instance.
    */
   constructor(Config) {
-    this.config = Config
+    this.config = Config;
     this.prefix = this.config.get('storage.prefix');
   }
 
