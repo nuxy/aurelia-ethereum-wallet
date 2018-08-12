@@ -76,14 +76,6 @@ export class WalletSend {
   }
 
   /**
-   * @TODO: Check Ether balance > sending amount.
-   */
-  calc() {
-
-
-  }
-
-  /**
    * Send transaction to an address.
    */
   submit() {

@@ -33,7 +33,7 @@
           <strong>Amount</strong>
         </label>
 
-        <input type="number" maxwidth="20" min="0" placeholder="0.000000000000000000" value.bind="amount" />
+        <input type="number" maxwidth="20" min="0.0001" placeholder="0.000000000000000000" step="0.0001" max="1.5" max.bind="selected.balance" value.bind="amount" />
       </fieldset>
 
       <fieldset>
@@ -45,7 +45,7 @@
       </fieldset>
     </form>
 
-    <button click.trigger="calc()" disabled.bind="!selected || !amount || !address || address.length < 42">Submit</button>
+    <button click.trigger="submit()" disabled.bind="!selected || !amount || !address || address.length < 42">Submit</button>
 
     <require from="resources/elements/account-balance"></require>
 
