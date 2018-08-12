@@ -1,5 +1,6 @@
 import {inject} from 'aurelia-dependency-injection';
 import ethers   from 'ethers';
+import download from 'downloadjs';
 
 // Local modules.
 import {Dialog}  from 'lib/dialog';
@@ -83,6 +84,20 @@ export class WalletAccounts {
   }
 
   /**
+   * Export the account data as JSON.
+   *
+   * @param {String} address
+   *   Wallet address.
+   */
+  export(address) {
+    let data = (this.accounts.filter(account => {
+      return account.address === address;
+    }))[0];
+
+    download(JSON.stringify(data), `${address}.json`, 'text/plain');
+  }
+
+  /**
    * Remove an existing account.
    *
    * @param {String} address
@@ -93,8 +108,6 @@ export class WalletAccounts {
     // Confirm the action.
     this.dialog.confirm(`Remove: ${address}?`)
       .then(() => {
-
-        // Delete from storage.
         this.accounts = this.accounts.filter(account => {
           return account.address !== address;
         });

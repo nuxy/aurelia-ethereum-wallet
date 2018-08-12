@@ -93,6 +93,11 @@
             ]
           },
           {
+            "name": "downloadjs",
+            "path": "../node_modules/downloadjs",
+            "main": "download"
+          },
+          {
             "name": "ethers",
             "path": "../node_modules/ethers/dist",
             "main": "ethers"

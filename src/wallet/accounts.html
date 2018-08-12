@@ -16,8 +16,7 @@
           <td>${account.address}</td>
           <td>${account.balance}</td>
           <td>
-            <button click.trigger="action('wallet/receive', account)">Deposit</button>
-            <button click.trigger="action('wallet/send', account)" disabled.bind="account.balance == 0">Withdrawl</button>
+            <button click.trigger="export(account.address)">Export</button>
             <button click.trigger="remove(account.address)">Remove</button>
           </td>
         </tr>
