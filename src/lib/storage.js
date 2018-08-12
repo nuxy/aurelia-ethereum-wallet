@@ -13,14 +13,27 @@ import aes                              from 'crypto-js/aes';
 export class Storage {
 
   /**
+   * @var {String} _prefix
+   *
+   * @private
+   */
+  _prefix = null;
+
+  /**
+   * @var {String} _secret
+   *
+   * @private
+   */
+  _secret = null;
+
+  /**
    * Create a new instance of Storage.
    *
-   * @param {Config} Config
+   * @param {Config} config
    *   Config instance.
    */
-  constructor(Config) {
-    this.config = Config;
-    this.prefix = this.config.get('storage.prefix');
+  constructor(config) {
+    this._prefix = config.get('storage.prefix');
   }
 
   /**
@@ -32,18 +45,15 @@ export class Storage {
    * @param {String} key
    *   Storage item key name.
    *
-   * @param {String} secret
-   *   Encrypt using secret (optional).
-   *
-   * @return {*|undefined}
+   * @return {*|void}
    */
-  getItem(key, secret = null) {
+  getItem(key) {
     if (typeof key === 'string') {
       let val = sessionStorage.getItem(this.getKeyName(key));
       if (val) {
-        if (secret) {
+        if (this.secretKey()) {
           val = aes.decrypt(
-            val, secret
+            val, this.secretKey()
           ).toString(core.enc.Utf8);
         }
 
@@ -63,19 +73,16 @@ export class Storage {
    * @param {String} key
    *   Storage item key name.
    *
-   * @param {String} secret
-   *   Encrypt using secret (optional).
-   *
    * @param {*} data
    *   sessionStorage data.
    *
    * @return {Boolean|void}
    */
-  setItem(key, data, secret = null) {
+  setItem(key, data) {
     if (typeof key === 'string') {
-      if (secret) {
+      if (this.secretKey()) {
         data = aes.encrypt(
-          JSON.stringify(data), secret
+          JSON.stringify(data), this.secretKey()
         ).toString();
       } else {
         data = JSON.stringify(data);
@@ -114,7 +121,25 @@ export class Storage {
    * @return {String}
    */
   getKeyName(str) {
-    return this.prefix + str;
+    return this._prefix + str;
+  }
+
+  /**
+   * Get/Set the AES encryption key.
+   *
+   * @memberof Storage
+   * @method secretKey
+   *
+   * @param {String} str
+   *   Encrypt using secret (optional).
+   *
+   * @return {String|void}
+   */
+  secretKey(str = null) {
+    if (typeof str === 'string') {
+      this._secret = str;
+    }
+    return this._secret;
   }
 
   /**
