@@ -2,5 +2,8 @@
   "provider": {
     "name": "ropsten",
     "jsonRpcUrl": "http://localhost:8545"
+  },
+  "storage": {
+    "prefix": "wallet-"
   }
 }

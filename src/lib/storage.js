@@ -1,26 +1,26 @@
-import core from 'crypto-js';
-import aes  from 'crypto-js/aes';
+import {inject}                         from 'aurelia-dependency-injection';
+import {AureliaConfiguration as Config} from 'aurelia-configuration';
+import core                             from 'crypto-js';
+import aes                              from 'crypto-js/aes';
+
+@inject(Config)
 
 /**
  * Provides methods for storing data.
  *
- * @requires AureliaConfiguration
+ * @requires Config
  */
 export class Storage {
 
   /**
-   * @var {String} prefix
-   */
-  prefix = null;
-
-  /**
    * Create a new instance of Storage.
    *
-   * @param {String} prefix
-   *   Storage name prefix (optional).
+   * @param {Config} Config
+   *   Config instance.
    */
-  constructor(prefix = '') {
-    this.prefix = prefix;
+  constructor(Config) {
+    this.config = Config
+    this.prefix = this.config.get('storage.prefix');
   }
 
   /**
@@ -30,7 +30,7 @@ export class Storage {
    * @method getItem
    *
    * @param {String} key
-   *   Storage key name.
+   *   Storage item key name.
    *
    * @param {String} secret
    *   Encrypt using secret (optional).
@@ -109,7 +109,7 @@ export class Storage {
    * @method getKeyName
    *
    * @param {String} str
-   *   Storage key name.
+   *   Storage item key name.
    *
    * @return {String}
    */
