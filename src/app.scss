@@ -15,6 +15,10 @@ h1, h2 {
  * aurelia-dialog
  */
 .ux-dialog-open {
+  ux-dialog-body {
+    text-align: center;
+  }
+
   ux-dialog-overlay {
     background-color: #000;
     opacity: 0.5;
@@ -26,6 +30,7 @@ h1, h2 {
  */
 @import 'dialog/alert';
 @import 'dialog/confirm';
+@import 'dialog/file';
 @import 'dialog/password';
 @import 'wallet';
 @import 'wallet/accounts';

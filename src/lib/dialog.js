@@ -4,6 +4,7 @@ import {DialogService} from 'aurelia-dialog';
 // Local modules.
 import {DialogAlert}    from 'dialog/alert';
 import {DialogConfirm}  from 'dialog/confirm';
+import {DialogFile}     from 'dialog/file';
 import {DialogPassword} from 'dialog/password';
 
 @inject(DialogService)
@@ -53,6 +54,21 @@ export class Dialog {
    */
   confirm(message) {
     return this._openWindow(DialogConfirm, message);
+  }
+
+  /**
+   * Prompt file with message.
+   *
+   * @memberof Dialog
+   * @method file
+   *
+   * @param {String} message
+   *   Message text.
+   *
+   * @return {Promise|void}
+   */
+  file(message) {
+    return this._openWindow(DialogFile, message);
   }
 
   /**

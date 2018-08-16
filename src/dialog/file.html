@@ -1,0 +1,15 @@
+<template>
+  <div id="dialog-file">
+    <ux-dialog>
+      <ux-dialog-body>
+        ${message}
+      </ux-dialog-body>
+
+      <ux-dialog-footer>
+        <input type="file" accept="application/json" files.bind="file" />
+        <button click.trigger="dialog.cancel()">Cancel</button>
+        <button click.trigger="dialog.ok(file)" if.bind="file.length" >Import</button>
+      </ux-dialog-footer>
+    </ux-dialog>
+  </div>
+</template>
