@@ -13,7 +13,7 @@
           <td>
             <input maxwidth="15" placeholder="Untitled ${$index + 1}" keyup.trigger="rename(account.address, account.title)" value.bind="account.title" />
           </td>
-          <td>${account.address}</td>
+          <td><span class="clipboard" title="Copy to Clipboard" click.trigger="copy($event.target)">${account.address}</span></td>
           <td>${account.balance}</td>
           <td>
             <button click.trigger="export(account.address)">Export</button>

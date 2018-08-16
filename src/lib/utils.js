@@ -4,10 +4,25 @@
 export class Utils {
 
   /**
-   * Create a new instance of Utils.
+   * Copy selected text to the clipboard.
+   *
+   * @memberof Utils
+   * @method copyToClipboard
+   * @static
+   *
+   * @param {Element} elm
+   *
+   * @example
+   *   <Element click.bind="copyToClipboard($element.target)">
+   *     abcdefghijklmnopqrstuvwxyz1234567890
+   *   </Element>
    */
-  constructor() {
+  static copyToClipboard(elm) {
+    if (elm.innerText) {
+      window.getSelection();
 
+      document.execCommand('copy');
+    }
   }
 
   /**

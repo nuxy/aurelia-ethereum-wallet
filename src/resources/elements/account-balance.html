@@ -1,7 +1,7 @@
 <template>
   <div id="element-account-balance" if.bind="wallet">
     <ul>
-      <li><strong>Address</strong> ${address}</li>
+      <li><strong>Address</strong> <span class="clipboard" title="Copy to Clipboard" click.delegate="copy($event.target)">${address}</span></li>
       <li><strong>Balance</strong> ${balance || 'Retrieving data...'}</li>
     </ul>
 

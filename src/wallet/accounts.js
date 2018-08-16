@@ -5,6 +5,7 @@ import download from 'downloadjs';
 // Local modules.
 import {Dialog}  from 'lib/dialog';
 import {Storage} from 'lib/storage';
+import {Utils}   from 'lib/utils';
 
 @inject(Dialog, Storage)
 
@@ -25,6 +26,11 @@ export class WalletAccounts {
    * @var {Number} progress
    */
   progress = 0;
+
+  /**
+   * @var {Function} copy
+   */
+  copy = Utils.copyToClipboard;
 
   /**
    * Create a new instance of WalletAccounts.

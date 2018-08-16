@@ -22,6 +22,11 @@ export class AccountBalanceCustomElement {
   @bindable wallet;
 
   /**
+   * @var {Function} copy
+   */
+  copy = Utils.copyToClipboard;
+
+  /**
    * Create a new instance of AccountBalanceCustomElement.
    *
    * @param {Config} Config
