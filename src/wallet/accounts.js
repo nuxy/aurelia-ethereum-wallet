@@ -94,7 +94,34 @@ export class WalletAccounts {
       return account.address === address;
     }))[0];
 
-    download(JSON.stringify(data), `${address}.json`, 'text/plain');
+    download(JSON.stringify(data), `${address}.json`, 'application/json');
+  }
+
+  /**
+   * Import the account data as JSON.
+   */
+  import() {
+
+    // Prompt backup file upload.
+    this.dialog.file('Select a backup file (*.json)')
+      .then(response => {
+        let reader = new FileReader();
+        reader.onload = () => {
+          let data = JSON.parse(reader.result);
+
+          // Check for an existing account.
+          let exists = this.accounts.some(account => {
+            return JSON.parse(account) === data;
+          });
+
+          if (!exists) {
+            this.accounts.push(data);
+
+            this.storage.setItem('accounts', this.accounts);
+          }
+        };
+        reader.readAsText(response.output.item(0));
+      });
   }
 
   /**

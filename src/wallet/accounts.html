@@ -26,5 +26,9 @@
     <button click.trigger="create()" disabled.bind="progress">
       ${progress == 0 ? 'Create' : 'Creating'} <span if.bind="progress > 0 && progress < 100">(${progress}% complete)</span>
     </button>
+
+    <button click.trigger="import()">
+      Import
+    </button>
   </div>
 </template>
