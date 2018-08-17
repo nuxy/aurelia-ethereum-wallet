@@ -1,25 +1,29 @@
-import {bindable, inject}               from 'aurelia-framework';
-import {AureliaConfiguration as Config} from 'aurelia-configuration';
-import ethers                           from 'ethers';
+import {bindable, inject} from 'aurelia-framework';
 
 // Local modules.
 import {Dialog}  from 'lib/dialog';
+import {Ethers}  from 'lib/ethers';
 import {Storage} from 'lib/storage';
 import {Utils}   from 'lib/utils';
 
-@inject(Config, Dialog, Storage)
+@inject(Dialog, Ethers, Storage)
 
 /**
  * Provides account balance element.
  *
- * @requires Config
  * @requires Dialog
+ * @requires Ethers
  * @requires Storage
  */
 export class AccountBalanceCustomElement {
   @bindable address;
   @bindable balance;
   @bindable wallet;
+
+  /**
+   * @var {Number} progress
+   */
+  progress = 0;
 
   /**
    * @var {Function} copy
@@ -29,18 +33,18 @@ export class AccountBalanceCustomElement {
   /**
    * Create a new instance of AccountBalanceCustomElement.
    *
-   * @param {Config} Config
-   *   Config instance.
-   *
    * @param {Dialog} Dialog
    *   Dialog instance.
+   *
+   * @param {Ethers} Ethers
+   *   Ethers instance.
    *
    * @param {Storage} Storage
    *   Storage instance.
    */
-  constructor(Config, Dialog, Storage) {
-    this.config  = Config;
+  constructor(Dialog, Ethers, Storage) {
     this.dialog  = Dialog;
+    this.ethers  = Ethers;
     this.storage = Storage;
   }
 
@@ -48,36 +52,32 @@ export class AccountBalanceCustomElement {
    * Sync account balance with Ethereum network.
    */
   submit() {
-    let network = ethers.providers.networks[this.config.get('provider.name')];
-
-    this.balance = 0;
 
     // Prompt for wallet password.
     return this.dialog.password()
       .then(response => {
+        let wallet = null;
+
         let tasks = [];
 
         // Decrypt the wallet.
         tasks.push(() => {
-          return ethers.Wallet.fromEncryptedWallet(
-            this.wallet, response.output
-          );
+          return this.ethers.decryptWallet(this.wallet, response)
+            .then(instance => wallet = instance);
         });
 
         // Query the provider.
-        tasks.push(wallet => {
-          wallet.provider = ethers.providers.getDefaultProvider(network);
-
+        tasks.push(() => {
           return wallet.getBalance()
             .then(balance => {
-              return ethers.utils.formatEther(balance, { pad: true });
+              this.balance = this.ethers.formatEther(balance);
             });
         });
 
         // Execute actions.
         Utils.promiseTasks('Syncing wallet', tasks)
-          .then(balance => {
-            this.update(this.balance = balance);
+          .then(() => {
+            this.update(this.balance);
           })
           .catch(() => {
             this.balance = 'Failed to connect...';

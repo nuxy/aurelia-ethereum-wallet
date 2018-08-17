@@ -1,18 +1,19 @@
 import {inject} from 'aurelia-dependency-injection';
-import ethers   from 'ethers';
 import download from 'downloadjs';
 
 // Local modules.
 import {Dialog}  from 'lib/dialog';
+import {Ethers}  from 'lib/ethers';
 import {Storage} from 'lib/storage';
 import {Utils}   from 'lib/utils';
 
-@inject(Dialog, Storage)
+@inject(Dialog, Ethers, Storage)
 
 /**
  * Wallet Accounts.
  *
  * @requires Dialog
+ * @requires Ethers
  * @requires Storage
  */
 export class WalletAccounts {
@@ -38,11 +39,15 @@ export class WalletAccounts {
    * @param {Dialog} Dialog
    *   Dialog instance.
    *
+   * @param {Ethers} Ethers
+   *   Ethers instance.
+   *
    * @param {Storage} Storage
    *   Storage instance.
    */
-  constructor(Dialog, Storage) {
+  constructor(Dialog, Ethers, Storage) {
     this.dialog  = Dialog;
+    this.ethers  = Ethers;
     this.storage = Storage;
   }
 
@@ -67,17 +72,16 @@ export class WalletAccounts {
     this.dialog.password(true)
       .then(response => {
 
-        // Generate an encrypted wallet.
-        let wallet = ethers.Wallet.createRandom();
+        // Generate a wallet instance.
+        let wallet = this.ethers.createWallet();
 
-        let callback = percent => {
+        let timer = percent => {
           this.progress = parseInt(percent * 100, 10);
         };
 
-        wallet.encrypt(response.output, callback)
+        // Encrypt the wallet.
+        wallet.encrypt(response, timer)
           .then(json => {
-            this.progress = 0;
-
             this.accounts.push({
               balance: '0.000000000000000000',
               address: wallet.address,
@@ -112,6 +116,7 @@ export class WalletAccounts {
     this.dialog.file('Select a backup file (*.json)')
       .then(response => {
         let reader = new FileReader();
+
         reader.onload = () => {
           let data = JSON.parse(reader.result);
 
@@ -126,7 +131,8 @@ export class WalletAccounts {
             this.storage.setItem('accounts', this.accounts);
           }
         };
-        reader.readAsText(response.output.item(0));
+
+        reader.readAsText(response.item(0));
       });
   }
 

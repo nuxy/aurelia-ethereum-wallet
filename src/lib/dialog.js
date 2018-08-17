@@ -120,7 +120,7 @@ export class Dialog {
         })
         .whenClosed(response => {
           if (response.wasCancelled === false) {
-            resolve(response);
+            resolve(response.output);
           }
         });
     });
