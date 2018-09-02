@@ -50,7 +50,18 @@
             "main": "index"
           },
           "aurelia-dependency-injection",
-          "aurelia-event-aggregator",
+          {
+            "name": "aurelia-dialog",
+            "main": "aurelia-dialog",
+            "path": "../node_modules/aurelia-dialog/dist/amd",
+            "resources": []
+          },
+          {
+            "name": "aurelia-event-aggregator",
+            "main": "aurelia-event-aggregator",
+            "path": "../node_modules/aurelia-event-aggregator/dist/amd",
+            "resources": []
+          },
           "aurelia-framework",
           "aurelia-history",
           "aurelia-history-browser",
@@ -102,13 +113,7 @@
             "path": "../node_modules/ethers/dist",
             "main": "ethers"
           },
-          "text",
-          {
-            "name": "aurelia-dialog",
-            "main": "aurelia-dialog",
-            "path": "../node_modules/aurelia-dialog/dist/amd",
-            "resources": []
-          }
+          "text"
         ]
       }
     ],

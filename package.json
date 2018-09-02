@@ -8,9 +8,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "aurelia-animator-css": "^1.0.4",
     "aurelia-bootstrapper": "^2.2.0",
-    "aurelia-dialog": "^1.0.0-rc.2.0.0",
     "bluebird": "^3.5.1",
     "crypto-js": "^3.1.9-1",
     "downloadjs": "^1.4.7",
@@ -20,8 +18,11 @@
   },
   "peerDependencies": {},
   "devDependencies": {
+    "aurelia-animator-css": "^1.0.4",
     "aurelia-cli": "^0.33.0",
     "aurelia-configuration": "^2.0.0",
+    "aurelia-dialog": "^1.0.0-rc.2.0.0",
+    "aurelia-event-aggregator": "^1.0.1",
     "aurelia-testing": "^1.0.0-beta.4.0.0",
     "aurelia-tools": "^2.0.0",
     "babel-eslint": "^8.2.2",
