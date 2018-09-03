@@ -2,26 +2,26 @@ import {inject} from 'aurelia-dependency-injection';
 import download from 'downloadjs';
 
 // Local modules.
+import {Actions} from 'lib/actions';
 import {Dialog}  from 'lib/dialog';
 import {Ethers}  from 'lib/ethers';
-import {Storage} from 'lib/storage';
 import {Utils}   from 'lib/utils';
 
-@inject(Dialog, Ethers, Storage)
+@inject(Actions, Dialog, Ethers)
 
 /**
  * Wallet Accounts.
  *
+ * @requires Actions
  * @requires Dialog
  * @requires Ethers
- * @requires Storage
  */
 export class WalletAccounts {
 
   /**
-   * @var {Array} accounts
+   * @var {Array|null} accounts
    */
-  accounts = [];
+  accounts = null;
 
   /**
    * @var {Number} progress
@@ -36,31 +36,26 @@ export class WalletAccounts {
   /**
    * Create a new instance of WalletAccounts.
    *
+   * @param {Actions} Actions
+   *   Actions instance.
+   *
    * @param {Dialog} Dialog
    *   Dialog instance.
    *
    * @param {Ethers} Ethers
    *   Ethers instance.
-   *
-   * @param {Storage} Storage
-   *   Storage instance.
    */
-  constructor(Dialog, Ethers, Storage) {
+  constructor(Actions, Dialog, Ethers) {
+    this.actions = Actions;
     this.dialog  = Dialog;
     this.ethers  = Ethers;
-    this.storage = Storage;
   }
 
   /**
    * @inheritdoc
    */
   attached() {
-
-    // Get stored accounts.
-    let items = this.storage.getItem('accounts');
-    if (items) {
-      this.accounts = items;
-    }
+    this.accounts = this.actions.getItem('accounts') || [];
   }
 
   /**
@@ -88,7 +83,7 @@ export class WalletAccounts {
               wallet: json
             });
 
-            this.storage.setItem('accounts', this.accounts);
+            this.actions.setItem('accounts', this.accounts);
           });
       });
   }
@@ -118,7 +113,7 @@ export class WalletAccounts {
         let reader = new FileReader();
 
         reader.onload = () => {
-          let data = JSON.parse(reader.result);
+          let data = JSON.parse(reader.result.toString());
 
           // Check for an existing account.
           let exists = this.accounts.some(account => {
@@ -128,7 +123,7 @@ export class WalletAccounts {
           if (!exists) {
             this.accounts.push(data);
 
-            this.storage.setItem('accounts', this.accounts);
+            this.actions.setItem('accounts', this.accounts);
           }
         };
 
@@ -151,7 +146,7 @@ export class WalletAccounts {
           return account.address !== address;
         });
 
-        this.storage.setItem('accounts', this.accounts);
+        this.actions.setItem('accounts', this.accounts);
       });
   }
 
@@ -172,6 +167,6 @@ export class WalletAccounts {
       return account;
     });
 
-    this.storage.setItem('accounts', this.accounts);
+    this.actions.setItem('accounts', this.accounts);
   }
 }

@@ -2,18 +2,18 @@
   <div id="wallet-send">
     <h2>Send</h2>
 
-    <div class="status ${status.error ? 'error' : ''}" if.bind="status">
+    <div class="status ${status.error ? 'error' : ''}" if.bind="status.message">
       &rtrif; ${status.message}
     </div>
 
     <form>
       <fieldset>
-        <label>
+        <label for="account">
           <strong>Account</strong>
         </label>
 
-        <select matcher.bind="matcher" value.bind="selected">
-          <option model.bind="null">Choose...</option>
+        <select id="account" matcher.bind="matcher" value.bind="selected">
+          <option model.bind="account">Choose...</option>
           <option model.bind="account" repeat.for="account of accounts">
             ${account.title || 'Untitled ' + ($index + 1)}
           </option>
@@ -37,18 +37,14 @@
       </fieldset>
 
       <fieldset>
-        <label>
+        <label for="data">
           <strong>Data</strong>
         </label>
 
-        <textarea value.bind="data"></textarea>
+        <textarea id="data" value.bind="data"></textarea>
       </fieldset>
     </form>
 
     <button click.trigger="submit()" disabled.bind="!selected || !amount || !address || address.length < 42">Submit</button>
-
-    <require from="resources/elements/account-balance"></require>
-
-    <account-balance address.bind="selected.address" balance.bind="selected.balance" wallet.bind="selected.wallet"></account-balance>
   </div>
 </template>

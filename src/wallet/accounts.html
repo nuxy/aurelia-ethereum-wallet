@@ -2,11 +2,13 @@
   <div id="wallet-accounts">
     <h2>Accounts</h2>
 
-    <table if.bind="accounts.length">
+    <table if.bind="accounts">
       <thead>
-        <th>Title</th>
-        <th>Address</th>
-        <th>Balance</th>
+        <tr>
+          <th>Title</th>
+          <th>Address</th>
+          <th>Balance</th>
+        </tr>
       </thead>
       <tbody>
         <tr repeat.for="account of accounts">

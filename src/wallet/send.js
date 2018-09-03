@@ -1,26 +1,27 @@
-import {inject} from 'aurelia-dependency-injection';
+import {bindable, inject} from 'aurelia-framework';
 
 // Local modules.
+import {Actions} from 'lib/actions';
 import {Dialog}  from 'lib/dialog';
 import {Ethers}  from 'lib/ethers';
-import {Storage} from 'lib/storage';
 import {Utils}   from 'lib/utils';
 
-@inject(Dialog, Ethers, Storage)
+@inject(Actions, Dialog, Ethers)
 
 /**
  * Wallet / Send.
  *
+ * @requires Actions
  * @requires Dialog
  * @requires Ethers
- * @requires Storage
  */
 export class WalletSend {
+  @bindable selected = null;
 
   /**
    * @var {Array} accounts
    */
-  accounts = [];
+  accounts = null;
 
   /**
    * @var {String} address
@@ -38,43 +39,33 @@ export class WalletSend {
   matcher = null;
 
   /**
-   * @var {Object} wallet
+   * @var {Object} status
    */
-  selected = null;
-
-  /**
-   * @var {String} status
-   */
-  status = null;
+  status = {};
 
   /**
    * Create a new instance of WalletSend.
+   *
+   * @param {Actions} Actions
+   *   Actions instance.
    *
    * @param {Dialog} Dialog
    *   Dialog instance.
    *
    * @param {Ethers} Ethers
    *   Ethers instance.
-   *
-   * @param {Storage} Storage
-   *   Storage instance.
    */
-  constructor(Dialog, Ethers, Storage) {
+  constructor(Actions, Dialog, Ethers) {
+    this.actions = Actions;
     this.dialog  = Dialog;
     this.ethers  = Ethers;
-    this.storage = Storage;
   }
 
   /**
    * @inheritdoc
    */
   attached() {
-
-    // Get stored accounts.
-    let items = this.storage.getItem('accounts');
-    if (items) {
-      this.accounts = items;
-    }
+    this.accounts = this.actions.getItem('accounts') || [];
 
     // Select default values.
     this.matcher = (a, b) => {
@@ -82,6 +73,14 @@ export class WalletSend {
         return a.address === b.address;
       }
     };
+  }
+
+  // noinspection JSUnusedGlobalSymbols
+  /**
+   * @inheritdoc
+   */
+  selectedChanged(newValue) {
+    this.actions.setItem('selected', newValue);
   }
 
   /**
