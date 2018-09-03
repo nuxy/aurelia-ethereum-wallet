@@ -35,7 +35,7 @@ export class Routes {
 
       config.map([
         {
-          route: ['', 'wallet/:action?'],
+          route: ['', 'wallet/:option?'],
           name: 'wallet',
           moduleId: 'wallet',
           activationStrategy: 'replace',
