@@ -111,7 +111,7 @@
           {
             "name": "ethers",
             "path": "../node_modules/ethers/dist",
-            "main": "ethers"
+            "main": "ethers.umd"
           },
           "text"
         ]
